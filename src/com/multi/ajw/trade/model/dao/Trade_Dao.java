@@ -2,8 +2,8 @@ package com.multi.ajw.trade.model.dao;
 
 import com.multi.ajw.run.Trade_Run;
 import com.multi.ajw.trade.model.dto.OrderList;
+import com.multi.ajw.trade.model.dto.Productlist;
 import com.multi.ajw.trade.model.dto.UserList;
-import com.multi.ajw.trade.view.Trade_add;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -260,5 +260,170 @@ public class Trade_Dao {
             close(stmt);
         }
         return list;
+    }
+
+    public ArrayList<Productlist> show_product_list(Connection conn) {
+        ArrayList<Productlist> list=null;
+        PreparedStatement stmt = null;// 실행할 쿼리
+        ResultSet rset = null;// Select 한후 결과값 받아올 객체
+        String sql= prop.getProperty("showPRODUCTLIST");
+        try {
+            // 3. 쿼리문을 실행할 statement 객체 생성
+            stmt = conn.prepareStatement(sql);
+// 4.쿼리문 전송, 실행결과를 ResultSet 으로 받기
+            rset = stmt.executeQuery();
+
+// 5. 받은결과값을 객체에 옮겨서 저장하기
+            list = new ArrayList<Productlist>();
+            while (rset.next()) {
+                Productlist l = new Productlist();
+                l.setProduct_id(rset.getInt("PRODUCT_ID"));
+                l.setProduct_name(rset.getString("PRODUCT_NAME"));
+                l.setPrice(rset.getInt("PRICE"));
+                l.setCreated_at(rset.getDate("CREATED_AT"));
+                list.add(l);
+            }
+        } catch (
+                SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            //   throw new MemberException("selectAll 에러 : " + e.getMessage());
+        } finally {
+            close(rset);
+            close(stmt);
+        }
+        return list;
+    }
+
+    public void add_cart(Connection conn) {
+        Scanner sc = new Scanner(System.in);
+        PreparedStatement stmt = null;// 실행할 쿼리
+        String sql= prop.getProperty("inputCart");
+        int rs = 0;
+
+        try {
+            System.out.println("장바구니에 추가할 제품id 입력");
+            int pi=sc.nextInt();
+            sc.nextLine();
+            System.out.println("추가할 수량 입력");
+            int amount=sc.nextInt();
+            sc.nextLine();
+            // 3. 쿼리문을 실행할 statement 객체 생성
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, Trade_Run.auth);
+            stmt.setInt(2,pi);
+            stmt.setInt(3,amount);
+            rs=stmt.executeUpdate();
+            if(rs>=1){
+                conn.commit();
+            }
+
+        } catch (
+                SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            //   throw new MemberException("selectAll 에러 : " + e.getMessage());
+        } finally {
+            close(stmt);
+        }
+    }
+
+    public void insert_product(Connection conn) {
+        Productlist pl = new Productlist();
+        Scanner sc = new Scanner(System.in);
+        PreparedStatement stmt = null;// 실행할 쿼리
+        String sql= prop.getProperty("inputPRODUCT");
+        int rs = 0;
+
+        try {
+            System.out.println("새로 추가할 제품id 입력");//ID는 시퀀스로 자동 입력받게 수정 해야 함
+            pl.setProduct_id(sc.nextInt());
+            sc.nextLine();
+            System.out.println("새로 추가할 제품 이름 입력");
+            pl.setProduct_name(sc.nextLine());
+            System.out.println("새로 추가할 제품 가격 입력");
+            pl.setPrice(sc.nextInt());
+            sc.nextLine();
+            // 3. 쿼리문을 실행할 statement 객체 생성
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, pl.getProduct_id());
+            stmt.setString(2,pl.getProduct_name());
+            stmt.setInt(3,pl.getPrice());
+            rs=stmt.executeUpdate();
+            if(rs>=1){
+                conn.commit();
+            }
+
+        } catch (
+                SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            //   throw new MemberException("selectAll 에러 : " + e.getMessage());
+        } finally {
+            close(stmt);
+        }
+    }
+
+    public void update_product(Connection conn) {
+        Scanner sc = new Scanner(System.in);
+        Productlist pl = new Productlist();
+        PreparedStatement stmt = null;// 실행할 쿼리
+        String sql= prop.getProperty("updatePRODUCT");
+        int rs = 0;
+        try {
+            System.out.println("변경 할 제품ID 입력");
+            pl.setProduct_id(sc.nextInt());
+            sc.nextLine();
+            System.out.println("변경 될 제품 이름 입력");
+            pl.setProduct_name(sc.nextLine());
+            System.out.println("변경 될 제품 가격 입력");
+            pl.setPrice(sc.nextInt());
+            sc.nextLine();
+            // 3. 쿼리문을 실행할 statement 객체 생성
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, pl.getProduct_name());
+            stmt.setInt(2,pl.getPrice());
+            stmt.setInt(3,pl.getProduct_id());
+            rs=stmt.executeUpdate();
+            if(rs>=1){
+                conn.commit();
+            }
+
+        } catch (
+                SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            //   throw new MemberException("selectAll 에러 : " + e.getMessage());
+        } finally {
+            close(stmt);
+        }
+    }
+
+    public void delete_product(Connection conn) {
+        Scanner sc = new Scanner(System.in);
+        Productlist pl = new Productlist();
+        PreparedStatement stmt = null;// 실행할 쿼리
+        String sql= prop.getProperty("deletePRODUCT");
+        int rs = 0;
+        try {
+            System.out.println("삭제 할 제품ID 입력");
+            pl.setProduct_id(sc.nextInt());
+            sc.nextLine();
+            // 3. 쿼리문을 실행할 statement 객체 생성
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,pl.getProduct_id());
+            rs=stmt.executeUpdate();
+            if(rs>=1){
+                conn.commit();
+            }
+
+        } catch (
+                SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            //   throw new MemberException("selectAll 에러 : " + e.getMessage());
+        } finally {
+            close(stmt);
+        }
     }
 }
