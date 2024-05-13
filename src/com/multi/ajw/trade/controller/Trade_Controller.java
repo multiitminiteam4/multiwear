@@ -24,7 +24,7 @@ public class Trade_Controller {
         }
     }
 
-    public static void show_user_list() {//보상판매 신청 유저 조회
+    public static void show_user_list() {//보상판매 신청 유저 조회 및 승인|거절
         Trade_add add = new Trade_add();
         ArrayList<UserList> list;
         ArrayList<UserList> app_list;
