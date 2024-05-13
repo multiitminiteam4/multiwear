@@ -1,39 +1,21 @@
 package com.multi.ajw.trade.model.dto;
 
 public class OrderList {
-    private int order_id;
-    private String user_id;
     private String product_name;
+    private int amount;
     private int price;
-    private int product_id;
-    private String visible;
+    private int t_price;
+    private int order_id;
     public OrderList(){
 
     }
 
-    public OrderList(int order_id, String user_id, String product_name, int price, int product_id, String visible) {
-        this.order_id = order_id;
-        this.user_id = user_id;
+    public OrderList(String product_name, int amount, int price, int t_price,int order_id) {
         this.product_name = product_name;
+        this.amount = amount;
         this.price = price;
-        this.product_id = product_id;
-        this.visible = visible;
-    }
-
-    public int getOrder_id() {
-        return order_id;
-    }
-
-    public void setOrder_id(int order_id) {
+        this.t_price = t_price;
         this.order_id = order_id;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
     }
 
     public String getProduct_name() {
@@ -44,6 +26,14 @@ public class OrderList {
         this.product_name = product_name;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     public int getPrice() {
         return price;
     }
@@ -52,27 +42,27 @@ public class OrderList {
         this.price = price;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getT_price() {
+        return t_price;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setT_price(int t_price) {
+        this.t_price = t_price;
     }
 
-    public String getVisible() {
-        return visible;
+    public int getOrder_id() {
+        return order_id;
     }
 
-    public void setVisible(String visible) {
-        this.visible = visible;
+    public void setOrder_id(int order_id) {
+        this.order_id = order_id;
     }
 
     @Override
     public String toString() {
-        return order_id+", "+user_id+", "+product_id+", "+product_name+", "+price;
+        return order_id+", "+product_name+", "+amount+", "+price+", "+t_price;
     }
     public String checktoString() {
-        return order_id+", "+user_id+", "+product_id+", "+product_name+", "+price+", "+visible;
+        return "";//order_id+", "+user_id+", "+product_id+", "+product_name+", "+price+", "+visible;
     }
 }
