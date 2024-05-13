@@ -2,6 +2,7 @@ package com.multi.ajw.trade.service;
 
 import com.multi.ajw.trade.model.dao.Trade_Dao;
 import com.multi.ajw.trade.model.dto.OrderList;
+import com.multi.ajw.trade.model.dto.Productlist;
 import com.multi.ajw.trade.model.dto.UserList;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 
@@ -43,5 +44,26 @@ public class TradeService {
     public ArrayList<UserList> is_approved() {//유저가 본인이 신청한 결과 확인
         ArrayList<UserList> list = tradeDao.user_check_result(conn);
         return list;
+    }
+
+    public ArrayList<Productlist> show_product_list() {
+        ArrayList<Productlist> list = tradeDao.show_product_list(conn);
+        return list;//상품 리스트 조회 및 장바구니 담기
+    }
+
+    public void add_cart() {//장바구니에 추가
+        tradeDao.add_cart(conn);
+    }
+
+    public void insert_product() {// 상품 등록
+        tradeDao.insert_product(conn);
+    }
+
+    public void update_product() {//상품 업데이트
+        tradeDao.update_product(conn);
+    }
+
+    public void delete_product() {//상품 삭제
+        tradeDao.delete_product(conn);
     }
 }

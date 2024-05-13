@@ -3,10 +3,9 @@ package com.multi.ajw.trade.view;
 import com.multi.ajw.run.Trade_Run;
 import com.multi.ajw.trade.controller.Trade_Controller;
 import com.multi.ajw.trade.model.dto.OrderList;
+import com.multi.ajw.trade.model.dto.Productlist;
 import com.multi.ajw.trade.model.dto.UserList;
-import jdk.swing.interop.SwingInterOpUtils;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +25,28 @@ public class Trade_add {
             choice = sc.nextLine();
             switch (choice) {
                 case "1":
-                    System.out.println("상품 관리");
+                    System.out.println("1. 전체 상품 조회");
+                    System.out.println("2. 상품 등록");
+                    System.out.println("3. 상품 정보 업데이트");
+                    System.out.println("4. 상품 삭제");
+                    String r_choice=sc.nextLine();
+                    switch (r_choice){
+                        case "1":
+                            Trade_Controller.show_product_list();
+                            break;
+                        case "2":
+                            Trade_Controller.insert_product();
+                            break;
+                        case "3":
+                            Trade_Controller.update_product();
+                            break;
+                        case "4":
+                            Trade_Controller.delete_product();
+                            break;
+
+                        default:
+                            System.out.println("번호를 잘못입력하였습니다.");
+                    }
                     break;
                 case "2":
                     System.out.println("회원 정보 조회");
@@ -54,7 +74,7 @@ public class Trade_add {
         String choice;
         do {
             System.out.println("\n*******"+ Trade_Run.auth+"님의 메뉴********");
-            System.out.println("1. 상품 조회");
+            System.out.println("1. 상품 조회 및 장바구니 담기");
             System.out.println("2. 장바구니 조회");
             System.out.println("3. 보상 판매 등록");// update
             System.out.println("4. 마이페이지");
@@ -64,7 +84,9 @@ public class Trade_add {
             choice = sc.nextLine();
             switch (choice) {
                 case "1":
-                    System.out.println("1. 상품 조회");
+                    System.out.println("1. 상품 조회 및 장바구니 담기");
+                    Trade_Controller.show_product_list();
+                    Trade_Controller.input_cart();
                     break;
                 case "2":
                     System.out.println("2. 장바구니 조회");
@@ -122,6 +144,15 @@ public class Trade_add {
         System.out.println("\n유저id\t제품id\t승인여부\t가격\t신청날짜");
         System.out.println("----------------------------------------------------------");
         for(UserList l : list){
+            System.out.println(l);
+        }
+    }
+
+    public void displayProductList(ArrayList<Productlist> list) {
+        System.out.println("\n조회된 전체 정보는 다음과 같습니다.");
+        System.out.println("\n제품id\t제품이름\t제품가격\t등록날짜");
+        System.out.println("----------------------------------------------------------");
+        for(Productlist l : list){
             System.out.println(l);
         }
     }
