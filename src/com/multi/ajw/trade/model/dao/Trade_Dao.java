@@ -29,7 +29,7 @@ public class Trade_Dao {
         }
     }
 
-    public ArrayList<OrderList> order_selectAll(Connection conn) {//보상판매 신청 가능 내역 조회
+    public ArrayList<OrderList> order_selectAll(Connection conn) {//보상판매 신청 가능 내역 조회 DB수정 완료
         ArrayList<OrderList> list= null;
         PreparedStatement stmt = null;// 실행할 쿼리
         ResultSet rset = null;// Select 한후 결과값 받아올 객체
@@ -37,21 +37,19 @@ public class Trade_Dao {
         try {
             // 3. 쿼리문을 실행할 statement 객체 생성
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, Trade_Run.auth);
+            stmt.setInt(1, Integer.parseInt(Trade_Run.auth));
 // 4.쿼리문 전송, 실행결과를 ResultSet 으로 받기
             rset = stmt.executeQuery();
 
 // 5. 받은결과값을 객체에 옮겨서 저장하기
             list = new ArrayList<OrderList>();
             while (rset.next()) {
-                System.out.println("왜");
                 OrderList l = new OrderList();
-                l.setOrder_id(rset.getInt("ORDER_ID"));
-                l.setUser_id(rset.getString("USER_ID"));
-                l.setProduct_id(rset.getInt("PRODUCT_ID"));
                 l.setProduct_name(rset.getString("PRODUCT_NAME"));
+                l.setAmount(rset.getInt("AMOUNT"));
+                l.setT_price(rset.getInt("A.AMOUNT*B.PRICE"));
                 l.setPrice(rset.getInt("PRICE"));
-
+                l.setOrder_id(rset.getInt("ORDER_ID"));
                 list.add(l);
             }
         } catch (
@@ -67,7 +65,7 @@ public class Trade_Dao {
     }
 
     public void add_trade(Connection conn) {//보상판매 리스트에 넣기
-        System.out.println("추가할 제품id 입력");
+        System.out.println("추가할 주문id 입력");
         Scanner sc = new Scanner(System.in);
         PreparedStatement stmt = null;
         PreparedStatement stmt2 = null;
@@ -262,7 +260,7 @@ public class Trade_Dao {
         return list;
     }
 
-    public ArrayList<Productlist> show_product_list(Connection conn) {
+    public ArrayList<Productlist> show_product_list(Connection conn) {//여기부턴 DB 형식 맞음
         ArrayList<Productlist> list=null;
         PreparedStatement stmt = null;// 실행할 쿼리
         ResultSet rset = null;// Select 한후 결과값 받아올 객체
@@ -336,9 +334,6 @@ public class Trade_Dao {
         int rs = 0;
 
         try {
-            System.out.println("새로 추가할 제품id 입력");//ID는 시퀀스로 자동 입력받게 수정 해야 함
-            pl.setProduct_id(sc.nextInt());
-            sc.nextLine();
             System.out.println("새로 추가할 제품 이름 입력");
             pl.setProduct_name(sc.nextLine());
             System.out.println("새로 추가할 제품 가격 입력");
@@ -346,9 +341,8 @@ public class Trade_Dao {
             sc.nextLine();
             // 3. 쿼리문을 실행할 statement 객체 생성
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, pl.getProduct_id());
-            stmt.setString(2,pl.getProduct_name());
-            stmt.setInt(3,pl.getPrice());
+            stmt.setString(1,pl.getProduct_name());
+            stmt.setInt(2,pl.getPrice());
             rs=stmt.executeUpdate();
             if(rs>=1){
                 conn.commit();

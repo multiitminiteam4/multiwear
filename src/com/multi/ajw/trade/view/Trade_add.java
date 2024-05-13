@@ -124,7 +124,7 @@ public class Trade_add {
     }
     public void displayOrderList(List<OrderList> list) {//주문내역조회(유저기능)
         System.out.println("\n조회된 전체 정보는 다음과 같습니다.");
-        System.out.println("\n주문id\t유저id\t제품id\t제품명\t가격");
+        System.out.println("\n주문id\t제품명\t수량\t가격\t총가격");
         System.out.println("----------------------------------------------------------");
 
         for(OrderList l: list) {
