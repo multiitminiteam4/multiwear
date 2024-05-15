@@ -1,5 +1,7 @@
 package com.multi.ksh.cart.view;
 
+import com.multi.ajw.run.Trade_Run;
+import com.multi.ajw.trade.view.Trade_add;
 import com.multi.ksh.cart.controller.CartController;
 import com.multi.ksh.cart.model.Dto.CartDto;
 
@@ -13,6 +15,7 @@ public class CartMenu {
 
     // CartController 객체 생성 (기본 생성자): : 어디서든 쓸 수 있게 전역 변수로 생성
     private CartController cartController = new CartController();
+    Trade_add td = new Trade_add();
 
     // cartMenu 메소드 생성
     public void cartMenu(int id) {
@@ -33,7 +36,7 @@ public class CartMenu {
                 switch (choice) {
 
                     case "*":
-                        // mainMenu() // 메인메뉴를 보여주는 메서드 호출
+                        td.trade_user();// 메인메뉴를 보여주는 메서드 호출
                         break;
                     case "#":
                         System.out.println("\n시스템을 종료합니다.");
@@ -68,7 +71,7 @@ public class CartMenu {
                         deleteCartProduct(id);
                         break;
                     case "*":
-                        // mainMenu() // 메인메뉴를 보여주는 메서드 호출
+                        td.trade_user(); // 메인메뉴를 보여주는 메서드 호출
                         break;
                     case "#":
                         System.out.println("\n시스템을 종료합니다.");

@@ -386,6 +386,8 @@ public class Trade_Dao {
             rs=stmt.executeUpdate();
             if(rs>=1){
                 conn.commit();
+            }else{
+                System.out.println("해당하는 id의 상품이 없습니다.");
             }
 
         } catch (
@@ -412,6 +414,8 @@ public class Trade_Dao {
             rs=stmt.executeUpdate();
             if(rs>=1){
                 conn.commit();
+            }else {
+                System.out.println("해당하는 id의 상품이 없습니다.");
             }
 
         } catch (
