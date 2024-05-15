@@ -141,7 +141,7 @@ public class Trade_add {
     }
     public void displayAPPList(ArrayList<UserList> list){//선택한 유저의 보상판매 신청 리스트(관리자,유저 둘다 사용)
         System.out.println("\n조회된 전체 정보는 다음과 같습니다.");
-        System.out.println("\n유저id\t제품id\t승인여부\t가격\t신청날짜");
+        System.out.println("\n보상판매id\t제품id\t제품이름\t승인여부\t가격\t신청날짜");
         System.out.println("----------------------------------------------------------");
         for(UserList l : list){
             System.out.println(l);
