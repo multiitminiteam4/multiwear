@@ -223,7 +223,7 @@ public class Trade_Dao {
                         stmt3.setInt(2, id);
                         rs = stmt3.executeUpdate();
                         if (rs >= 1) {
-                            System.out.println("현재 포인트: "+point + (int)(price * 0.01));
+                            System.out.println("현재 포인트: "+(point + (int)(price * 0.01)));
                             conn.commit();
                         }
                     }
