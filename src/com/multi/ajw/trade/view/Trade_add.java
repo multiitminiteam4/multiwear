@@ -33,7 +33,28 @@ public class Trade_add {
             choice = sc.nextLine();
             switch (choice) {
                 case "1":
-                    // 상품 관리 기능 코드 생략
+                    System.out.println("1. 전체 상품 조회");
+                    System.out.println("2. 상품 등록");
+                    System.out.println("3. 상품 정보 업데이트");
+                    System.out.println("4. 상품 삭제");
+                    String r_choice=sc.nextLine();
+                    switch (r_choice){
+                        case "1":
+                            Trade_Controller.show_product_list();
+                            break;
+                        case "2":
+                            Trade_Controller.insert_product();
+                            break;
+                        case "3":
+                            Trade_Controller.update_product();
+                            break;
+                        case "4":
+                            Trade_Controller.delete_product();
+                            break;
+
+                        default:
+                            System.out.println("번호를 잘못입력하였습니다.");
+                    }
                     break;
                 case "2":
                     System.out.println("회원 정보 조회");
@@ -41,7 +62,7 @@ public class Trade_add {
                     break;
                 case "3":
                     System.out.println("보상 판매 심사");
-                    compensationSalesReview();
+                    Trade_Controller.show_user_list();
                     break;
                 case "#":
                     System.out.println("정말로 끝내시겠습니까??(y/n)");
