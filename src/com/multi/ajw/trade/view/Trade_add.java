@@ -5,6 +5,7 @@ import com.multi.ajw.trade.controller.Trade_Controller;
 import com.multi.ajw.trade.model.dto.OrderList;
 import com.multi.ajw.trade.model.dto.Productlist;
 import com.multi.ajw.trade.model.dto.UserList;
+import com.multi.ksh.cart.view.CartMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +91,8 @@ public class Trade_add {
                     break;
                 case "2":
                     System.out.println("2. 장바구니 조회");
+                    int id = 1; // user id 로그인 시 받아오기 지금은 일단 1
+                    new CartMenu().cartMenu(id);
                     break;
                 case "3":
                     System.out.println("3. 보상 판매 등록");// update
