@@ -6,70 +6,104 @@ import com.multi.ajw.trade.model.dto.OrderList;
 import com.multi.ajw.trade.model.dto.Productlist;
 import com.multi.ajw.trade.model.dto.UserList;
 import com.multi.ksh.cart.view.CartMenu;
+import config.OracleSetting;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Trade_add {
     private static Scanner sc = new Scanner(System.in);
-    public void trade_root() {//관리자 메뉴
+    private String currentUserId;
+
+
+
+
+    public void trade_root() { //관리자 메뉴
         String choice;
         do {
             System.out.println("\n*******관리자 메뉴********");
             System.out.println("1. 상품 관리");
             System.out.println("2. 회원 정보 조회");
-            System.out.println("3. 보상 판매 심사");// select, update
-            System.out.println("#. 프로그램 종료");// 종료
+            System.out.println("3. 보상 판매 심사");
+            System.out.println("#. 프로그램 종료");
             System.out.println("번호선택 : ");
 
             choice = sc.nextLine();
             switch (choice) {
                 case "1":
-                    System.out.println("1. 전체 상품 조회");
-                    System.out.println("2. 상품 등록");
-                    System.out.println("3. 상품 정보 업데이트");
-                    System.out.println("4. 상품 삭제");
-                    String r_choice=sc.nextLine();
-                    switch (r_choice){
-                        case "1":
-                            Trade_Controller.show_product_list();
-                            break;
-                        case "2":
-                            Trade_Controller.insert_product();
-                            break;
-                        case "3":
-                            Trade_Controller.update_product();
-                            break;
-                        case "4":
-                            Trade_Controller.delete_product();
-                            break;
-
-                        default:
-                            System.out.println("번호를 잘못입력하였습니다.");
-                    }
+                    // 상품 관리 기능 코드 생략
                     break;
                 case "2":
                     System.out.println("회원 정보 조회");
+                    memberInfoInquiry();
                     break;
                 case "3":
                     System.out.println("보상 판매 심사");
-                    Trade_Controller.show_user_list();
+                    compensationSalesReview();
                     break;
                 case "#":
                     System.out.println("정말로 끝내시겠습니까??(y/n)");
                     if ('y' == sc.next().toLowerCase().charAt(0)) {
                         return;
                     }
-
                     break;
-
                 default:
                     System.out.println("번호를 잘못입력하였습니다.");
             }
-
         } while (true);
+
     }
+
+
+
+    public void memberInfoInquiry() {
+        List<UserList> userList = Trade_Controller.getUserList();
+        displayUserList(userList);
+    }
+
+    private void displayUserList(List<UserList> userList) {
+        System.out.println("\n------- 회원 정보 -------");
+        System.out.println("사용자 ID\t가입일");
+        System.out.println("-------------------------");
+        for (UserList user : userList) {
+            System.out.printf("%s\t%s\n", user.getUser_id(), user.getDate());
+        }
+    }
+    private void compensationSalesReview() {
+        List<UserList> tradeInList = Trade_Controller.getTradeInList();
+        displayTradeInList(tradeInList);
+    }
+
+    private void displayTradeInList(List<UserList> tradeInList) {
+        System.out.println("\n------- 보상 판매 심사 -------");
+        System.out.println("보상판매ID\t사용자ID\t제품ID\t제품명\t승인여부\t가격\t신청날짜");
+        System.out.println("-------------------------------------------------------------------------");
+        for (UserList tradeIn : tradeInList) {
+            System.out.printf("%d\t%s\t%d\t%s\t%s\t%d\t%s\n",
+                    tradeIn.getTrade(), tradeIn.getUser_id(), tradeIn.getProduct_id(),
+                    tradeIn.getProduct_name(), tradeIn.getIsapproved(), tradeIn.getPrice(),
+                    tradeIn.getDate());
+        }
+    }
+
+    public int displayMemberInfoMenu() {
+        System.out.println("----- 회원 정보 조회 -----");
+
+        // users 테이블에서 회원 정보 조회
+        List<UserList> userList = Trade_Controller.getUserList();
+
+        for (UserList user : userList) {
+            System.out.printf("%s - 가입일시: %s\n", user.getUser_id(), user.getDate());
+        }
+
+        System.out.println("0. 뒤로 가기");
+        System.out.print("선택: ");
+        return Integer.parseInt(sc.nextLine());
+    }
+
+
 
     public void trade_user() {//유저 메뉴
         String choice;
