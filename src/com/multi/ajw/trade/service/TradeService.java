@@ -4,7 +4,6 @@ import com.multi.ajw.trade.model.dao.Trade_Dao;
 import com.multi.ajw.trade.model.dto.OrderList;
 import com.multi.ajw.trade.model.dto.Productlist;
 import com.multi.ajw.trade.model.dto.UserList;
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -22,8 +21,8 @@ public class TradeService {
         return list;
     }
 
-    public void add() {//선택한 제품을 보상판매 신청 리스트에 추가
-        tradeDao.add_trade(conn);
+    public void add(ArrayList<OrderList> list) {//선택한 제품을 보상판매 신청 리스트에 추가
+        tradeDao.add_trade(conn,list);
     }
 
     public ArrayList<UserList> application_selectAll() {//보상판매를 신청한 유저 리스트 조회

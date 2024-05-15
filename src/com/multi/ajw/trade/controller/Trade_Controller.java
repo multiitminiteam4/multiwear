@@ -19,9 +19,9 @@ public class Trade_Controller {
         list = tradeService.order_selectAll();
         if(!list.isEmpty()){
             add.displayOrderList(list);
-            tradeService.add();
+            tradeService.add(list);
         }else{
-            System.out.println("신청 목록이 없습니다.");
+            System.out.println("구매 내역이 없습니다.");
         }
     }
 
@@ -38,7 +38,7 @@ public class Trade_Controller {
                 tradeService.judge();
             }
         }else{
-            System.out.println("신청 목록이 없습니다.");
+            System.out.println("보상 판매를 신청 한 유저가 없습니다.");
         }
     }
 
@@ -50,7 +50,7 @@ public class Trade_Controller {
         if(!list.isEmpty()){
             add.displayAPPList(list);
         }else{
-            System.out.println("신청 목록이 없습니다.");
+            System.out.println("보상 판매 신청 목록이 없습니다.");
         }
     }
 
@@ -60,6 +60,8 @@ public class Trade_Controller {
         list = tradeService.show_product_list();
         if(!list.isEmpty()){
             add.displayProductList(list);
+        }else{
+            System.out.println("등록 된 상품이 없습니다.");
         }
     }
 
