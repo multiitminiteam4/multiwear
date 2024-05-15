@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -425,5 +426,19 @@ public class Trade_Dao {
         } finally {
             close(stmt);
         }
+    }
+
+    public List<UserList> getUserList(Connection conn) {
+        List<UserList> userList = new ArrayList<>();
+        // users 테이블에서 사용자 정보를 조회하는 SQL 쿼리 실행
+        // UserList 객체로 변환하여 리스트에 추가
+        return userList;
+    }
+
+    public List<UserList> getTradeInList(Connection conn) {
+        List<UserList> tradeInList = new ArrayList<>();
+        // trade_in 테이블에서 보상 판매 신청 정보를 조회하는 SQL 쿼리 실행
+        // UserList 객체로 변환하여 리스트에 추가
+        return tradeInList;
     }
 }

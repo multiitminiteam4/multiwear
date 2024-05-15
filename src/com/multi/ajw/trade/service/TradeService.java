@@ -7,13 +7,14 @@ import com.multi.ajw.trade.model.dto.UserList;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.multi.ajw.common.JDBCTemplate.getConnection;
 
 public class TradeService {
     private final Trade_Dao tradeDao;
-    Connection conn = getConnection();
-    public TradeService(){
+    Connection conn= getConnection();
+    public TradeService() {
         tradeDao = new Trade_Dao();
     }
     public ArrayList<OrderList> order_selectAll(){//구매내역 조회
@@ -65,4 +66,13 @@ public class TradeService {
     public void delete_product() {//상품 삭제
         tradeDao.delete_product(conn);
     }
+
+    public List<UserList> getUserList() {
+        return tradeDao.getUserList(conn);
+    }
+
+    public List<UserList> getTradeInList() {
+        return tradeDao.getTradeInList(conn);
+    }
+
 }

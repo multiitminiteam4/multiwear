@@ -8,6 +8,7 @@ import com.multi.ajw.trade.service.TradeService;
 import com.multi.ajw.trade.view.Trade_add;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Trade_Controller {
@@ -80,5 +81,38 @@ public class Trade_Controller {
 
     public static void delete_product() {//상품 삭제
         tradeService.delete_product();
+    }
+
+    public static List<UserList> getUserList() {
+        List<UserList> userList = new ArrayList<>();
+        // 데이터베이스에서 사용자 정보를 가져와 UserList 객체로 변환하여 리스트에 추가
+        // ...
+        return userList;
+    }
+
+    public static UserList getUserDetail(String userId) {
+        UserList user = null;
+        // 데이터베이스에서 해당 userId의 사용자 정보를 가져와 UserList 객체로 변환
+        // ...
+        return user;
+    }
+
+    public static List<UserList> getCompensationSalesList() {
+        List<UserList> compensationList = new ArrayList<>();
+        // 데이터베이스에서 보상 판매 신청 정보를 가져와 UserList 객체로 변환하여 리스트에 추가
+        // ...
+        return compensationList;
+    }
+
+    public static UserList getCompensationSalesDetail(int tradeInId) {
+        UserList compensation = null;
+        // 데이터베이스에서 해당 tradeInId의 보상 판매 신청 정보를 가져와 UserList 객체로 변환
+        // ...
+        return compensation;
+    }
+
+
+    public static List<UserList> getTradeInList() {
+        return tradeService.getTradeInList();
     }
 }
