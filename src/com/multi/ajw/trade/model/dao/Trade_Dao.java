@@ -430,15 +430,60 @@ public class Trade_Dao {
 
     public List<UserList> getUserList(Connection conn) {
         List<UserList> userList = new ArrayList<>();
-        // users 테이블에서 사용자 정보를 조회하는 SQL 쿼리 실행
-        // UserList 객체로 변환하여 리스트에 추가
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT id, created_at FROM users";
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                UserList user = new UserList();
+                user.setUser_id(rs.getString("id"));
+                user.setDate(rs.getDate("created_at"));
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(stmt);
+        }
+
         return userList;
     }
 
     public List<UserList> getTradeInList(Connection conn) {
         List<UserList> tradeInList = new ArrayList<>();
-        // trade_in 테이블에서 보상 판매 신청 정보를 조회하는 SQL 쿼리 실행
-        // UserList 객체로 변환하여 리스트에 추가
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT trade_in.trade_in_id, trade_in.id, trade_in.product_id, product.product_name, trade_in.is_approved, product.price, trade_in.app_date " +
+                "FROM trade_in " +
+                "JOIN product ON trade_in.product_id = product.product_id";
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                UserList tradeIn = new UserList();
+                tradeIn.setTrade(rs.getInt("trade_in_id"));
+                tradeIn.setUser_id(rs.getString("user_id"));
+                tradeIn.setProduct_id(rs.getInt("product_id"));
+                tradeIn.setProduct_name(rs.getString("product_name"));
+                tradeIn.setIsapproved(rs.getString("is_approved"));
+                tradeIn.setPrice(rs.getInt("price"));
+                tradeIn.setDate(rs.getDate("app_date"));
+                tradeInList.add(tradeIn);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(stmt);
+        }
+
         return tradeInList;
     }
 }
